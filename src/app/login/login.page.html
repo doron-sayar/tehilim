@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar color="primary" mode="ios">
+    <ion-title>תהילים ממוקד</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" dir="ltr">
+  <form [formGroup]="credentials" (ngSubmit)="login()">
+    <ion-item class="ion-margin-buttom">
+      <ion-input type="email" aria-label="Email" placeholder="Email" formControlName="email"></ion-input>
+    </ion-item>
+    <ion-item class="ion-margin-buttom">
+      <ion-input type="password" aria-label="Password" placeholder="Password" formControlName="password"></ion-input>
+    </ion-item>
+    <ion-button expand="full" type="submit" [disabled]="!credentials.valid">כניסה</ion-button> <!---->
+    <ion-button expand="full" type="button" [disabled]="!credentials.valid" (click)="register()">הרשמה</ion-button>
+  </form>
+</ion-content>

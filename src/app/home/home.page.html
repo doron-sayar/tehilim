@@ -1,0 +1,56 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title text-center>תהלים ממוקד</ion-title>
+    <ion-buttons slot="start">
+      <ion-button href="/categories"><ion-icon name="people-outline"></ion-icon></ion-button> 
+      <ion-button href="/settings"><ion-icon name="settings-outline"></ion-icon></ion-button>
+      <ion-button href="/about"><ion-icon name="information-circle-outline"></ion-icon></ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="logOut()"><ion-icon name="log-out-outline" class="rotate-180"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="false" *ngIf="isLogged" 
+             [style.font-size]="font_size+'em'" class="ion-text-justify background">
+
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+    <ion-fab-button color="secondary" size="small">
+        <ion-icon name="share-social-outline"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="start">
+        <ion-fab-button color="secondary" (click)="shareFacebook()">
+            <ion-icon name="logo-facebook"></ion-icon>
+        </ion-fab-button>
+        <ion-fab-button color="secondary" (click)="shareWhatsApp()">
+            <ion-icon name="logo-whatsapp"></ion-icon>
+        </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+      
+  <ion-list>
+    <ion-item lines="full">
+      <ion-label>נושא לקריאה</ion-label>
+      <ion-select placeholder="בחר נושא"
+        [(ngModel)]="selected_category"
+        (ionChange)="getVerses()" >
+        <ion-select-option *ngFor="let cat of jsonCategories;" value="{{cat.category_id}}">{{cat.category_name}}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+    <ion-grid >
+      <ion-row *ngFor="let verse_item of verses; index as i;" >
+        <ion-col><!--size="12">-->
+          {{verse_item[0]}}<ion-text color="primary"><b>{{verse_item[1]}}</b></ion-text>{{verse_item[2]}}<ion-text color="primary"><b>{{verse_item[3]}}</b></ion-text>{{verse_item[4]}}<ion-text color="primary"><b>{{verse_item[5]}}</b></ion-text>{{verse_item[6]}}<ion-text color="primary"><b>{{verse_item[7]}}</b></ion-text>{{verse_item[8]}}
+           <ion-text class="pointer"> ({{str_ptr_array[i]}})</ion-text>
+      </ion-col>
+      </ion-row>
+      <ion-row><ion-col>&nbsp;</ion-col></ion-row>
+    </ion-grid>
+    <div *ngIf="names_count" class="names">
+      <div style="text-align:center;font-size:large">{{dedicate}}</div><br>
+      <ion-label>{{namesString}}</ion-label>
+    </div>
+    <br><br><br>
+    
+</ion-content>

@@ -1,0 +1,16 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title text-align="center">ניהול שמות לזיכוי</ion-title>
+    <ion-buttons slot="start">
+      <ion-button href="/home"><ion-icon name="chevron-back"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-list>
+    <ion-item *ngFor="let cat of jsonCategories" href="/names/{{cat.category_id}}">
+      <ion-badge slot="end" *ngIf="cat.name_count>0">{{cat.name_count}}</ion-badge>
+      {{cat.category_name}}
+    </ion-item>
+  </ion-list>
+</ion-content>
