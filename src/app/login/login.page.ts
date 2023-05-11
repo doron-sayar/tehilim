@@ -55,9 +55,10 @@ export class LoginPage implements OnInit {
     await loading.present();
 
     try{
-      const user=await this.authService.login(this.credentials.value);
+      const user=await this.authService.anonLogin();
       if(user){
       this.router.navigateByUrl('/home',{replaceUrl:true});
+      console.log('UID='+user.user.uid)
     }else{
       console.log('LOGIN FAILED!')
       this.showAlert('Login failed','Please try again');

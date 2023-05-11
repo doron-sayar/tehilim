@@ -24,13 +24,13 @@ export class NamesPage implements OnInit {
               private alertController:AlertController,
               private modalCtrl:ModalController) {
     this.activatedRoute.paramMap.subscribe(paramMap => {
-      if (!paramMap.has('catID') || (!localStorage.getItem('isLogged'))) {
+      if (!paramMap.has('catID')) {
         //redirect
         this.router.navigate(['/home']);
         return;
       }
       this.cat_id = paramMap.get('catID');
-      this.uid=localStorage.getItem('uid');
+      this.uid=localStorage.getItem('UID');
       
       //get category name for the header
       this.http.get('https://alpine.pairsite.com/tehilim/get_category_by_id.php?cat_id='+this.cat_id).toPromise().then((data) => {

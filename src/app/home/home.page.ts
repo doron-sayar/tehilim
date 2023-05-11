@@ -4,6 +4,7 @@ import { Component } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { ModalController,NavParams } from '@ionic/angular';
 import { ModalComponent } from '../modal/modal.component';
+import { ModalRegisterPage} from '../modal-register/modal-register.page';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -23,7 +24,6 @@ export class HomePage {
   public intro:string;
   public boldstr:string;
   private uid: string;
-  public userEmail: string;
   public isLogged: boolean;
   public str_array!:string[];
   public str_ptr_array!:string[];
@@ -33,11 +33,11 @@ export class HomePage {
   public str_names:string;
   public names_count:number;
   public id_array:number[];
-  public email:string;
   public dedicate: string;
   private display_shared:string;
   private font_range:number;
   public font_size:number;
+  public fresh_flag:boolean;
   
   constructor(private http: HttpClient,
     private alertCtrl: AlertController,
@@ -46,61 +46,40 @@ export class HomePage {
     private router:Router,
     private socialSharing:SocialSharing
     ) {
-
-      const ga = getAuth();
-      onAuthStateChanged(ga, (user) => {
-        if (user) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/firebase.User
-
-          this.email=user.email;
-          console.log("EMAIL="+this.email);
-          this.isLogged=true;
-          this.http.get('https://alpine.pairsite.com/tehilim/get_uid.php?email='+this.email).toPromise().then((data) => {
-          this.uid=data[0].uid;
-          console.log('UID='+this.uid);
-          localStorage.setItem('isLogged','true');
-          localStorage.setItem('email',this.email);
-          localStorage.setItem('uid',this.uid);
-
-          //init value for shared names
-          if(localStorage.getItem("display_others")==null){
-          localStorage.setItem("display_others","false")
-          }
-          this.display_shared=localStorage.getItem("display_others")
-
-          //init value for font size
-          if (localStorage.getItem("font_range")==null){
-            localStorage.setItem("font_range","2")
-          }
-          this.font_range=Number(localStorage.getItem("font_range"))
-          this.font_size=1.2+0.1*this.font_range
+      console.log("LOCAL UID="+localStorage.getItem('UID'))
+      if (localStorage.getItem('UID')==null){
+        console.log('NULL UID! registering...')
+        this.showModalRegister();
+        /*
+        //register new UID
+        this.http.get('https://alpine.pairsite.com/tehilim/register.php').toPromise().then((data) => {
+        this.uid=data[0].uid
+        console.log('new UID='+this.uid)
+        localStorage.setItem('UID',this.uid)
         })
-        } else {
-          // User is signed out
-          this.email=null;
-          localStorage.removeItem('isLogged');
-          localStorage.removeItem('email');
-          localStorage.removeItem('uid');
-        }
-      });
+        //init values
+        localStorage.setItem("display_others","false")
+        localStorage.setItem("font_range","2")*/
+      }
+      this.uid=localStorage.getItem('UID')
+      this.display_shared=localStorage.getItem("display_others")
+      this.font_range=Number(localStorage.getItem("font_range"))
+      this.font_size=1.2+0.1*this.font_range
     
-
-        
-   
-    
-    this.verses=[];
+      this.verses=[];
       this.str_ptr_array=[];
       this.http.get('https://alpine.pairsite.com/tehilim/get_categories.php').toPromise().then((data) => {
         this.jsonCategories=data;
     })
+    this.fresh_flag=true;
   }
 
   ngOnInit() {
     //this.getVerses();
   }
   
-  getVerses() {
+  getVerses(showModal:boolean) {
+    this.fresh_flag=false; //hide welcome message
     console.log("selected="+this.selected_category)
     this.verses=[]; //init array
     this.id_array=[]; //init array
@@ -146,13 +125,16 @@ export class HomePage {
                   '&ds='+this.display_shared).toPromise().then((data) => {
         this.jsonNames=data;
         this.names_count=this.jsonNames.length;
+        console.log('#NAMES='+this.names_count)
         this.namesString=this.jsonNames[0].fullname;
         for (var i=1;i<this.names_count;i++){
           this.namesString+=", "+this.jsonNames[i].fullname
         }
         console.log("first name="+this.namesString)
     })
-    this.showModal();
+    if(showModal){
+      this.showModal();
+    }
   }
 
   showModal(){
@@ -164,9 +146,22 @@ export class HomePage {
     })
   }
   
-  async logOut(){
-    await this.auth.logout();
-    this.router.navigateByUrl('/',{replaceUrl:true})
+  showModalRegister(){
+    this.modalCtrl.create({
+      component: ModalRegisterPage,
+      backdropDismiss:false,
+      componentProps: {category:this.selected_category},
+      breakpoints:[0.85],
+      initialBreakpoint:0.85
+    }).then(modalres=>{
+      modalres.present();
+    })
+  }
+  
+  logOut(){
+    localStorage.removeItem('UID')
+    //this.router.navigateByUrl('/',{replaceUrl:true})
+    window.location.reload()
   }
 
  async shareFacebook() {
@@ -175,16 +170,36 @@ export class HomePage {
     });
 }
 
-async shareMail() {
-    this.socialSharing.shareViaEmail('×”×™×™ ×—×‘×¨×™×, ××ª× ×ž×•×–×ž× ×™× ×œ×”×¦×˜×¨×£ ××œ×™ ×œ×§×¨×™××ª ×ª×”×™×œ×™× ×™×•×ž×™×ª, 14 ×¤×¡×•×§×™×, ×”×ž×ª×ž×§×“×™× ×‘×¡×’×•×œ×” ×œ-×‘×¨×™××•×ª ×”×’×•×£. ×‘×¢"×” × ×¢×©×” ×•× ×¦×œ×™×—.\n\n×œ×”×•×¨×“×ª ×”××¤×œ×™×§×¦×™×”:\n\n×× ×“×¨×•××™×“ - http://bit.ly/Tehilim_Memokad\n\n××™×™×¤×•×Ÿ - https://bit.ly/TehilimMemokad', '×ª×”×™×œ×™× ×œ×‘×¨×™××•×ª ×”×’×•×£ - ×§×¨×™××” ×™×•×ž×™×ª', null, null, null, 'www/assets/share/sunday.png').then(() => {
-    }).catch(e => {
-    });
-}
-
 async shareWhatsApp() {
+    // Check if sharing is supported
+  this.socialSharing.canShareVia('whatsapp', 'msg','wusup','www/assets/img/bg-klaph.jpg').then(() => {
+  this.presentAlert('שיתוף אפשרי!');
+}).catch(() => {
+  this.presentAlert('לא ניתן לשתף כעת!');
+});
     this.socialSharing.shareViaWhatsApp('×”×™×™ ×—×‘×¨×™×, ××ª× ×ž×•×–×ž× ×™× ×œ×”×¦×˜×¨×£ ××œ×™ ×œ×§×¨×™××ª ×ª×”×™×œ×™× ×™×•×ž×™×ª, 14 ×¤×¡×•×§×™×, ×”×ž×ª×ž×§×“×™× ×‘×¡×’×•×œ×” ×œ-*×‘×¨×™××•×ª ×”×’×•×£*. ×‘×¢"×” × ×¢×©×” ×•× ×¦×œ×™×—.\n\n×œ×”×•×¨×“×ª ×”××¤×œ×™×§×¦×™×”:\n\n×× ×“×¨×•××™×“ - http://bit.ly/Tehilim_Memokad\n\n××™×™×¤×•×Ÿ - https://bit.ly/TehilimMemokad', 'www/assets/share/sunday.png', null).then(() => {
     }).catch(e => {
     });
+}
+async presentAlert(msg:string) {
+  const alert = await this.alertCtrl.create({
+    header: 'Alert',
+    subHeader: 'Important message',
+    message: msg,
+    buttons: ['OK'],
+  });
+
+  await alert.present();
+}
+
+handleRefresh(event) {
+  setTimeout(() => {
+    // Any calls to load data go here
+    if (this.selected_category!=undefined){
+      this.getVerses(false)
+    }
+    event.target.complete();
+  }, 2000);
 }
 
 }

@@ -1,3 +1,4 @@
+<meta name="color-scheme" content="light" />
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
     <ion-title text-center>תהלים ממוקד</ion-title>
@@ -6,15 +7,15 @@
       <ion-button href="/settings"><ion-icon name="settings-outline"></ion-icon></ion-button>
       <ion-button href="/about"><ion-icon name="information-circle-outline"></ion-icon></ion-button>
     </ion-buttons>
-    <ion-buttons slot="end">
+    <!--<ion-buttons slot="end">
       <ion-button (click)="logOut()"><ion-icon name="log-out-outline" class="rotate-180"></ion-icon></ion-button>
-    </ion-buttons>
+    </ion-buttons>-->
   </ion-toolbar>
 </ion-header>
-<ion-content [fullscreen]="false" *ngIf="isLogged" 
-             [style.font-size]="font_size+'em'" class="ion-text-justify background">
+<ion-content [fullscreen]="false" 
+             [style.font-size]="font_size+'em'" class="background">
 
-  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+  <!--<ion-fab horizontal="end" vertical="bottom" slot="fixed">
     <ion-fab-button color="secondary" size="small">
         <ion-icon name="share-social-outline"></ion-icon>
     </ion-fab-button>
@@ -26,23 +27,56 @@
             <ion-icon name="logo-whatsapp"></ion-icon>
         </ion-fab-button>
     </ion-fab-list>
-  </ion-fab>
+  </ion-fab>-->
       
-  <ion-list>
     <ion-item lines="full">
-      <ion-label>נושא לקריאה</ion-label>
       <ion-select placeholder="בחר נושא"
+      label="נושא לקריאה"
         [(ngModel)]="selected_category"
-        (ionChange)="getVerses()" >
-        <ion-select-option *ngFor="let cat of jsonCategories;" value="{{cat.category_id}}">{{cat.category_name}}</ion-select-option>
+        (ionChange)="getVerses(true)">
+        <ion-select-option  *ngFor="let cat of jsonCategories;" value="{{cat.category_id}}">{{cat.category_name}}</ion-select-option>
       </ion-select>
     </ion-item>
-  </ion-list>
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+      <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <div *ngIf="fresh_flag" style="text-align: center;
+              font-size:large;
+              padding-left: 15px;
+              padding-right: 15px;">
+      <h1>
+        ברוכים הבאים!
+      </h1>
+      <br>
+      <img src='../../assets/img/logo-search-book.png' width="100px">
+      <br>
+      <h3>
+        15 פסוקי תהלים ממוקדים כסגולה לכל!
+      </h3>
+      <br>
+      בחר את הנושא ותקבל פסוקים שנבחרו כמסוגלים ביותר – פסוקים הכוללים מילים, השייכות לאותו
+נושא, ומודגשות להגברת הכוונה והריכוז שבקריאתם.
+      <br><br>
+      כל משתמש מוזמן להוסיף שמות על פי הנושא שנבחר לקריאה, לזיווג, לרפואה, לשמחה, לזרע בר
+קיימא, לשלום בית, פרנסה ועוד...
+      <br><br>
+      יהי רצון שנזכה, בקריאת 15 הפסוקים, המיוחדים לכל יום ולכל נושא, לשאוב את הסגולה המתאימה.
+      <br><br>
+      אמן! כן יהי רצון!
+      <br><br>
+      לתרומות בביט:
+      <b>
+        054-9222160
+      </b>
+      <br><br>
+      בע"ה נעשה ונצליח
+      <br>
+    </div>
     <ion-grid >
       <ion-row *ngFor="let verse_item of verses; index as i;" >
         <ion-col><!--size="12">-->
           {{verse_item[0]}}<ion-text color="primary"><b>{{verse_item[1]}}</b></ion-text>{{verse_item[2]}}<ion-text color="primary"><b>{{verse_item[3]}}</b></ion-text>{{verse_item[4]}}<ion-text color="primary"><b>{{verse_item[5]}}</b></ion-text>{{verse_item[6]}}<ion-text color="primary"><b>{{verse_item[7]}}</b></ion-text>{{verse_item[8]}}
-           <ion-text class="pointer"> ({{str_ptr_array[i]}})</ion-text>
+           <ion-text class="pointer"> ({{str_ptr_array[i]}}, {{id_array[i]}})</ion-text>
       </ion-col>
       </ion-row>
       <ion-row><ion-col>&nbsp;</ion-col></ion-row>
@@ -51,6 +85,6 @@
       <div style="text-align:center;font-size:large">{{dedicate}}</div><br>
       <ion-label>{{namesString}}</ion-label>
     </div>
-    <br><br><br>
+    <br><br>
     
 </ion-content>

@@ -10,19 +10,12 @@ const redirectUnauthorizedToLogin=()=>redirectUnauthorizedTo(['']);
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule),
-    ...canActivate(redirectLoggedInToHome)
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule),
-    ...canActivate(redirectUnauthorizedToLogin)
+    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
   },
-  /*{
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },*/
   {
     path: 'categories',
     loadChildren: () => import('./categories/categories.module').then( m => m.CategoriesPageModule)
@@ -42,6 +35,10 @@ const routes: Routes = [
   {
     path: 'about',
     loadChildren: () => import('./about/about.module').then( m => m.AboutPageModule)
+  },
+  {
+    path: 'modal-register',
+    loadChildren: () => import('./modal-register/modal-register.module').then( m => m.ModalRegisterPageModule)
   },
   
 ];

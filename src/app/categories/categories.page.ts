@@ -10,7 +10,7 @@ export class CategoriesPage implements OnInit {
   public jsonCategories:any;
   private uid:string;
   constructor(private http:HttpClient) {
-    this.uid=localStorage.getItem('uid');
+    this.uid=localStorage.getItem('UID');
     this.http.get('https://alpine.pairsite.com/tehilim/get_names_setup.php?uid='+this.uid).toPromise().then((data) => {
         this.jsonCategories=data;
     })
