@@ -38,6 +38,7 @@ export class HomePage {
   private font_range:number;
   public font_size:number;
   public fresh_flag:boolean;
+  public msg:string;
   
   constructor(private http: HttpClient,
     private alertCtrl: AlertController,
@@ -72,6 +73,21 @@ export class HomePage {
         this.jsonCategories=data;
     })
     this.fresh_flag=true;
+    this.msg=
+      'היי חברים, אתם מוזמנים להצטרף אלי לקריאת 15 פסוקי תהלים *ממוקדים והמסוגלים* לאריכות ימים, בריאות, שמחה, פרנסה, זיווג, ובכל נושא שתבחרו...'+
+      '%0D%0A'+
+      'בעזרת השם נעשה ונצליח.'+
+      '%0D%0A%0D%0A'+
+      'להורדת האפליקציה:'+
+      '%0D%0A'+
+      'אנדרויד-'+
+      '%0D%0A'+
+      'https://bit.ly/tehilim-memukad-android-app'+
+      '%0D%0A%0D%0A'+
+      'אייפון-'+
+      '%0D%0A'+
+      'https://tehilim-2b2b0.web.app/home'+
+      '%0D%0A%0D%0A'
   }
 
   ngOnInit() {
@@ -163,12 +179,6 @@ export class HomePage {
     //this.router.navigateByUrl('/',{replaceUrl:true})
     window.location.reload()
   }
-
- async shareFacebook() {
-    this.socialSharing.shareViaFacebook('×”×™×™ ×—×‘×¨×™×, ××ª× ×ž×•×–×ž× ×™× ×œ×”×¦×˜×¨×£ ××œ×™ ×œ×§×¨×™××ª ×ª×”×™×œ×™× ×™×•×ž×™×ª, 14 ×¤×¡×•×§×™×, ×”×ž×ª×ž×§×“×™× ×‘×¡×’×•×œ×” ×œ-×‘×¨×™××•×ª ×”×’×•×£. ×‘×¢"×” × ×¢×©×” ×•× ×¦×œ×™×—.\n\n×œ×”×•×¨×“×ª ×”××¤×œ×™×§×¦×™×”:\n\n×× ×“×¨×•××™×“ - http://bit.ly/Tehilim_Memokad\n\n××™×™×¤×•×Ÿ - https://bit.ly/TehilimMemokad', 'www/assets/share/sunday.png', null).then(() => {
-    }).catch(e => {
-    });
-}
 
 async shareViaWhatsApp() {
     // Check if sharing is supported
