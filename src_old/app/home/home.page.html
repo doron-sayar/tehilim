@@ -5,15 +5,11 @@
     <ion-buttons slot="start">
       <ion-button href="/categories"><ion-icon name="people-outline"></ion-icon></ion-button> 
       <ion-button href="/settings"><ion-icon name="settings-outline"></ion-icon></ion-button>
-      
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <!--<ion-button (click)="logOut()"><ion-icon name="log-out-outline" class="rotate-180"></ion-icon></ion-button>-->
       <ion-button href="/about"><ion-icon name="information-circle-outline"></ion-icon></ion-button>
-      <ion-button (click)="shareViaWhatsApp()"><ion-icon name="share-social-outline"></ion-icon></ion-button>
-      <!--<ion-button href="whatsapp://send?text=Hello World!"><ion-icon name="logo-whatsapp"></ion-icon></ion-button>-->
-      
     </ion-buttons>
+    <!--<ion-buttons slot="end">
+      <ion-button (click)="logOut()"><ion-icon name="log-out-outline" class="rotate-180"></ion-icon></ion-button>
+    </ion-buttons>-->
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="false" 
@@ -80,7 +76,7 @@
       <ion-row *ngFor="let verse_item of verses; index as i;" >
         <ion-col><!--size="12">-->
           {{verse_item[0]}}<ion-text color="primary"><b>{{verse_item[1]}}</b></ion-text>{{verse_item[2]}}<ion-text color="primary"><b>{{verse_item[3]}}</b></ion-text>{{verse_item[4]}}<ion-text color="primary"><b>{{verse_item[5]}}</b></ion-text>{{verse_item[6]}}<ion-text color="primary"><b>{{verse_item[7]}}</b></ion-text>{{verse_item[8]}}
-           <ion-text class="pointer"> ({{str_ptr_array[i]}})</ion-text>
+           <ion-text class="pointer"> ({{str_ptr_array[i]}}, {{id_array[i]}})</ion-text>
       </ion-col>
       </ion-row>
       <ion-row><ion-col>&nbsp;</ion-col></ion-row>

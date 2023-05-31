@@ -40,10 +40,6 @@ const routes: Routes = [
     path: 'modal-register',
     loadChildren: () => import('./modal-register/modal-register.module').then( m => m.ModalRegisterPageModule)
   },
-  {
-    path: 'delete-account',
-    loadChildren: () => import('./delete-account/delete-account.module').then( m => m.DeleteAccountPageModule)
-  },
   
 ];
 

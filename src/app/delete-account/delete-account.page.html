@@ -1,0 +1,15 @@
+
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title text-center>מחיקת החשבון</ion-title>
+    <ion-buttons slot="start">
+      <ion-button href="/settings"><ion-icon name="chevron-back"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="background ion-text-center">  
+  <h1>נא לאשר מחיקת החשבון לצמיתות</h1>
+  <ion-button (click)="deleteAccount()">אישור</ion-button>
+  <ion-button href="settings">ביטול</ion-button>
+</ion-content>

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { RangeCustomEvent,AlertController } from '@ionic/angular';
+import { RangeCustomEvent } from '@ionic/angular';
 import { RangeValue } from '@ionic/core';
+import { last } from 'rxjs';
 
 @Component({
   selector: 'app-settings',
@@ -15,10 +16,8 @@ export class SettingsPage implements OnInit {
   public is_checked:any;
   public fontRange:String;
   lastEmittedValue: RangeValue;
-  handlerMessage = '';
-  roleMessage = '';
   
-  constructor(private http:HttpClient,private alertController:AlertController) {
+  constructor(private http:HttpClient) {
     //init value for share names
     if(localStorage.getItem("display_others")==null){
       localStorage.setItem("display_others","false")

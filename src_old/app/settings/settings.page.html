@@ -9,7 +9,8 @@
   </ion-header>
   <ion-list>
     <ion-item lines="full">
-      <ion-toggle (ionChange)="updateDisplayOthers()" [(ngModel)]="is_checked">הצג שמות לזיכוי ששותפו איתי</ion-toggle> <!--[enableOnOffLabels]="true"-->
+      <ion-label>הצג שמות לזיכוי ששותפו איתי</ion-label>
+      <ion-toggle (ionChange)="updateDisplayOthers()" [(ngModel)]="is_checked"></ion-toggle> <!--[enableOnOffLabels]="true"-->
     </ion-item>
     <ion-item lines="full">
       <ion-label>גודל גופן</ion-label>
@@ -23,9 +24,6 @@
         <ion-img slot="start" src="../../assets/icon-aleph.JPG" style="width:8%"></ion-img>
         <ion-img slot="end" src="../../assets/icon-aleph.JPG" style="width:15%"></ion-img>
       </ion-range>
-    </ion-item>
-    <ion-item button href="delete-account">
-      מחיקת החשבון לצמיתות
     </ion-item>
    <!-- <ion-item lines="full">
       <ion-icon slot="start" name="moon"></ion-icon>

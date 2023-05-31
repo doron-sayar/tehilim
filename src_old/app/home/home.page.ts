@@ -5,9 +5,9 @@ import { AlertController } from '@ionic/angular';
 import { ModalController,NavParams } from '@ionic/angular';
 import { ModalComponent } from '../modal/modal.component';
 import { ModalRegisterPage} from '../modal-register/modal-register.page';
-//import { AuthService } from '../services/auth.service';
+import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-//import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 
 @Component({
@@ -42,7 +42,7 @@ export class HomePage {
   constructor(private http: HttpClient,
     private alertCtrl: AlertController,
     public modalCtrl: ModalController,
-    //private auth:AuthService,
+    private auth:AuthService,
     private router:Router,
     private socialSharing:SocialSharing
     ) {
@@ -170,23 +170,16 @@ export class HomePage {
     });
 }
 
-async shareViaWhatsApp() {
+async shareWhatsApp() {
     // Check if sharing is supported
-  //this.socialSharing.canShareVia('whatsapp').then(() => {
-    this.socialSharing.shareViaWhatsApp(
-      'היי חברים, אתם מוזמנים להצטרף אלי לקריאת תהילים יומית, 15 פסוקים, המתמקדים בסגולה ל-בריאות הגוף. בע"ה נעשה ונצליח.'+
-      '\n\nלהורדת האפליקציה:'+
-      '\n\nאנדרויד-'+
-      '\nhttp://bit.ly/Tehilim_Memokad'+
-      '\n\nאייפון-'+
-      '\nhttp://bit.ly/Tehilim_Memokad','https://alpine.pairsite.com/tehilim/img/tehilim-memukad.jpeg').then(() => {
-      //success
-    }).catch(()=>{
-      this.presentAlert('לא ניתן לשתף כעת!');
-    })
-//}).catch(() => {
-//  this.presentAlert('לא ניתן לשתף כעת!');
-//});
+  this.socialSharing.canShareVia('whatsapp', 'msg','wusup','www/assets/img/bg-klaph.jpg').then(() => {
+  this.presentAlert('שיתוף אפשרי!');
+}).catch(() => {
+  this.presentAlert('לא ניתן לשתף כעת!');
+});
+    this.socialSharing.shareViaWhatsApp('×”×™×™ ×—×‘×¨×™×, ××ª× ×ž×•×–×ž× ×™× ×œ×”×¦×˜×¨×£ ××œ×™ ×œ×§×¨×™××ª ×ª×”×™×œ×™× ×™×•×ž×™×ª, 14 ×¤×¡×•×§×™×, ×”×ž×ª×ž×§×“×™× ×‘×¡×’×•×œ×” ×œ-*×‘×¨×™××•×ª ×”×’×•×£*. ×‘×¢"×” × ×¢×©×” ×•× ×¦×œ×™×—.\n\n×œ×”×•×¨×“×ª ×”××¤×œ×™×§×¦×™×”:\n\n×× ×“×¨×•××™×“ - http://bit.ly/Tehilim_Memokad\n\n××™×™×¤×•×Ÿ - https://bit.ly/TehilimMemokad', 'www/assets/share/sunday.png', null).then(() => {
+    }).catch(e => {
+    });
 }
 async presentAlert(msg:string) {
   const alert = await this.alertCtrl.create({

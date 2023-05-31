@@ -6,11 +6,11 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule} from '@angular/common/http';
-//import {environment} from '../environments/environment';
-//import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
-//import { provideAuth,getAuth } from '@angular/fire/auth';
-//import { provideFirestore,getFirestore } from '@angular/fire/firestore';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {environment} from '../environments/environment';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { provideAuth,getAuth } from '@angular/fire/auth';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 
 
@@ -23,9 +23,9 @@ import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
             IonicModule.forRoot(), 
             AppRoutingModule,
             HttpClientModule,
-            //provideFirebaseApp(() => initializeApp(environment.firebase)),
-            //provideAuth(() => getAuth()),
-            //provideFirestore(() => getFirestore())
+            provideFirebaseApp(() => initializeApp(environment.firebase)),
+            provideAuth(() => getAuth()),
+            provideFirestore(() => getFirestore())
           ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     SocialSharing],
