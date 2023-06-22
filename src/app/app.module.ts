@@ -7,13 +7,6 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule} from '@angular/common/http';
-//import {environment} from '../environments/environment';
-//import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
-//import { provideAuth,getAuth } from '@angular/fire/auth';
-//import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
-
-
 
 @NgModule({
   declarations: [AppComponent,
@@ -27,8 +20,7 @@ import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
             //provideAuth(() => getAuth()),
             //provideFirestore(() => getFirestore())
           ],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    SocialSharing],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

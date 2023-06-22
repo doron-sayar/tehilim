@@ -5,10 +5,7 @@ import { AlertController } from '@ionic/angular';
 import { ModalController,NavParams } from '@ionic/angular';
 import { ModalComponent } from '../modal/modal.component';
 import { ModalRegisterPage} from '../modal-register/modal-register.page';
-//import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-//import { getAuth, onAuthStateChanged } from "firebase/auth";
-import { SocialSharing } from '@awesome-cordova-plugins/social-sharing/ngx';
 
 @Component({
   selector: 'app-home',
@@ -44,8 +41,7 @@ export class HomePage {
     private alertCtrl: AlertController,
     public modalCtrl: ModalController,
     //private auth:AuthService,
-    private router:Router,
-    private socialSharing:SocialSharing
+    private router:Router
     ) {
       console.log("LOCAL UID="+localStorage.getItem('UID'))
       if (localStorage.getItem('UID')==null){
@@ -180,24 +176,6 @@ export class HomePage {
     window.location.reload()
   }
 
-async shareViaWhatsApp() {
-    // Check if sharing is supported
-  //this.socialSharing.canShareVia('whatsapp').then(() => {
-    this.socialSharing.shareViaWhatsApp(
-      'היי חברים, אתם מוזמנים להצטרף אלי לקריאת תהילים יומית, 15 פסוקים, המתמקדים בסגולה ל-בריאות הגוף. בע"ה נעשה ונצליח.'+
-      '\n\nלהורדת האפליקציה:'+
-      '\n\nאנדרויד-'+
-      '\nhttp://bit.ly/Tehilim_Memokad'+
-      '\n\nאייפון-'+
-      '\nhttp://bit.ly/Tehilim_Memokad','https://alpine.pairsite.com/tehilim/img/tehilim-memukad.jpeg').then(() => {
-      //success
-    }).catch(()=>{
-      this.presentAlert('לא ניתן לשתף כעת!');
-    })
-//}).catch(() => {
-//  this.presentAlert('לא ניתן לשתף כעת!');
-//});
-}
 async presentAlert(msg:string) {
   const alert = await this.alertCtrl.create({
     header: 'Alert',
