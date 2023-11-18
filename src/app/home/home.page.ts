@@ -78,7 +78,7 @@ export class HomePage {
       '%0D%0A'+
       'אנדרויד-'+
       '%0D%0A'+
-      'https://bit.ly/tehilim-memukad-android-app'+
+      'https://play.google.com/store/apps/details?id=com.odvd.tehilim'+
       '%0D%0A%0D%0A'+
       'אייפון-'+
       '%0D%0A'+
